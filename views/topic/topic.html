@@ -1,0 +1,73 @@
+{{extend '../_layouts/home.html'}} {{block 'head'}} {{/block}} {{block 'body'}}
+<main>
+    <div class="container">
+        <form action="" id="userInfo_form">
+            <div>
+                <!-- <label for="">标题</label> -->
+                <h1>
+                    {{publish.title}}
+                </h1>
+                <!-- <input type="text" name="email" value={{publish.title}} readonly="readonly"> -->
+            </div>
+            <div>
+                <!-- <label for="">内容</label> -->
+                <h3>
+                    {{publish.content}}
+                </h3>
+                <!-- <input type="text" name="nickname" value={{publish.content}}> -->
+            </div>
+
+            <div>
+                <!-- <button class="btn btn-primary">确定修改</button> -->
+                <a href="/" class="btn btn-danger">返回</a>
+            </div>
+        </form>
+    </div>
+</main>
+{{/block}} {{block 'script'}}
+<script>
+    $(function() {
+        $('.userInfo').on('click', function() {
+            $('.userCount').toggle()
+        })
+
+
+        if ($('input[name=gender]').val() === '-1') {
+            $(this).val("默认")
+            console.log('change')
+        }
+
+
+
+
+
+        $('#userInfo_form').on('submit', function(e) {
+            e.preventDefault()
+            let formData = $(this).serialize()
+                // console.log(formData)
+
+            $.ajax({
+                type: 'POST',
+                url: '/userInfo',
+                dataType: 'json',
+                data: formData,
+                success: function(data) {
+                    // console.log(data)
+                    if (data.code === 0) {
+                        window.alert('更改成功，即将跳转')
+                        window.location.href = '/'
+                    } else {
+                        window.alert('更改失败，请稍后再试')
+                    }
+                }
+            })
+        })
+
+
+
+
+        // if()
+    })
+</script>
+
+{{/block}}

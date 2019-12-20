@@ -1,0 +1,67 @@
+{{extend './_layouts/home.html'}} {{block 'title'}}{{'多人博客 - 首页'}}{{/block}} {{block 'body'}}
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-9 ">
+
+            <h2 class="sub-header">学生管理</h2>
+            <a class="btn btn-success" href="/students/new">添加学生</a>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>mongodb_id</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>年龄</th>
+                            <th>爱好</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ each students }}
+                        <tr>
+                            <td>{{ $value.id }}</td>
+                            <td>{{ $value.name }}</td>
+                            <td>{{ $value.gender }}</td>
+                            <td>{{ $value.age }}</td>
+                            <td>{{ $value.hobbies }}</td>
+                            <td>
+                                <a href="/students/edit?id={{ $value._id }}">编辑</a>
+                                <a href="/students/delete?id={{ $value._id }}">删除</a>
+                            </td>
+                        </tr>
+                        {{ /each }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<p></p>
+<p></p>
+
+
+<section class="container">
+    {{ if user }}
+    <a class="btn btn-success" href="/publish">发帖</a> {{ /if }}
+    <p></p>
+    <ul class="media-list">
+
+        {{ each publish }}
+        <li class="media">
+            <div class="media-left">
+                <a href="#">
+                    <img width="40" height="40" class="media-object" src="../public/img/avatar-max-img.png" alt="...">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"><a href="/topic?id={{ $value._id }}">标题：{{ $value.title }}</h4>
+                <p>{{ $value.content }}</p>
+            </div>
+        </li>
+        {{ /each }}
+    </ul>
+
+</section>
+{{/block}}
